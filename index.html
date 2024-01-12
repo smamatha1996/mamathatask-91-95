@@ -1,0 +1,245 @@
+<html>
+<head>
+    <title>Xml</title>
+    <link href="style.css" rel="stylesheet">
+    
+    </head>
+    <body>
+        <div class="data" >
+        <p><b style="font-size: 16px;">F</b>complexity: The final objective is aimed at finding parsimonious solutions by minimizing
+            the number of selected features:
+        </p>
+             <img class="img1" src="91page1.jpeg">
+            <p>Note that at least one feature must be used. Other things being equal, we expect
+               that lower complexity will lead to easier interpretability and scalability of the solutions
+               as well as better generalization.</p>
+            <p><b style="font-size: 16px;">The Wrapper Model of ELSA/EM</b></p>
+            <p>We first outline the model of ELSA/EM in Figure 5. In ELSA, each agent (candidate
+               solution) in the population is first initialized with some random solution and an initial
+               reservoir of energy. The representation of an agent consists of (D + Kmax – 2) bits.D bits
+               correspond to the selected features (1 if a feature is selected, 0 otherwise). The remaining
+              bits are a unary representation of the number of clusters.6
+             This representation is
+             motivated by the desire to preserve the regularity of the number of clusters under the
+             genetic operators; changing any one bit will change K by one.</p>
+            <p>Mutation and crossover operators are used to explore the search space and are
+defined in the same way as in previous section. In order to assign energy to a solution,
+ELSA must be informed of clustering quality. In the experiments described here, the
+clusters to be evaluated are constructed based on the selected features using the EM
+algorithm. Each time a new candidate solution is evaluated, the corresponding bit string
+is parsed to get a feature subset J and a cluster number K. The clustering algorithm is</p>
+            <p><i>Figure 5: The pseudo-code of ELSA/EM.</i></p>
+            <img class="img2" src="91page.jpeg">
+            <p>given the projection of the data set onto J, uses it to form K clusters, and returns the
+fitness values.
+            </p>
+            <p><b style="font-size: 16px;">Experiments on the Synthetic Data</b></p>
+            <p><i style="font-size: 16px;">Data set and baseline algorithm</i></p>
+            <p> set, in which the distributions of the points and the significant features are known,
+while the appropriate clusters in any given feature subspace are not known. The data set
+has N = 500 points and D = 30 features. It is constructed so that the first 10 features are
+significant, with five “true” normal clusters consistent across these features. The next
+10 features are Gaussian noise, with points randomly and independently assigned to two
+normal clusters along each of these dimensions. The remaining 10 features are white
+noise. We evaluate the evolved solutions by their ability to discover five pre-constructed
+clusters in a 10-dimensional subspace.
+We present some two-dimensional projections of the synthetic data set in Figure
+6. In our experiments, individuals are represented by 36 bits— 30 for the features and 6
+for K (Kmax = 8). There are 15 energy bins for all energy sources, Fclusters, Fcomplexity, and
+Faccuracy. The values for the various ELSA parameters are: Pr<i>(mutation)</i> = 1.0, Pr<i>(crossover)</i>
+= 0.8, pmax = 100, Ecost = 0.2, Etotal = 40, h = 0.3, and T = 30,000.</p>
+            <p><i style="font-size: 16px;">Experimental results</i></p>
+            <p>We show the candidate fronts found by the ELSA/EM algorithm for each different
+number of clusters K in Figure 7.
+We omit the candidate front for K = 8 because of its inferiority in terms of clustering
+quality and incomplete coverage of the search space. Composition of selected features
+is shown for Fcomplexity corresponding to 10 features (see text).</p>
+            <p><i>Figure 6: A few two-dimensional projections of the synthetic data set.</i></p>
+                <img class="img3"src="92page.jpeg">
+            <p>We analyze whether our ELSA/EM model is able to identify the correct number of
+clusters based on the shape of the candidate fronts across different values of K and
+Faccuracy. The shape of the Pareto fronts observed in ELSA/EM is as follows: an ascent
+in the range of higher values of Fcomplexity (lower complexity), and a descent for lower values
+of Fcomplexity (higher complexity). This is reasonable because adding additional significant
+features will have a good effect on the clustering quality with few previously selected
+features. However, adding noise features will have a negative effect on clustering quality
+in the probabilistic model, which, unlike Euclidean distance, is not affected by dimensionality. The coverage of the ELSA/EM model shown in Figure 7 is defined as:</p>
+            <img class="img4" src="93page1.jpeg">
+            <p>We note that the clustering quality and the search space coverage improve as the
+evolved number of clusters approaches the “true” number of clusters, K = 5. The
+candidate front for K = 5 not only shows the typical shape we expect, but also an overall
+improvement in clustering quality. The other fronts do not cover comparable ranges of
+the feature space either because of the agents’ low Fclusters (K = 7) or because of the agents’
+low Faccuracy and Fcomplexity (K = 2 and K = 3). A decision-maker again would conclude the
+right number of clusters to be five or six.</p>
+            <p>We note that the first 10 selected features, 0.69 ≤Fcomplexity≤ 1, are not all significant. This
+notion is again quantified through the number of significant / Gaussian noise / white noise
+features selected at Fcomplexity = 0.69 (10 features) in Figure 7.7
+ None of the “white noise” features
+is selected. We also show snapshots of the ELSA/EM fronts for K = 5 at every 3,000 solution
+evaluations in Figure 8. ELSA/EM explores a broad subset of the search space, and thus
+identifies better solutions across Fcomplexity as more solutions are evaluated. We observed
+similar results for different number of clusters K.</p>
+            <p><i>Figure 7: The candidate fronts of ELSA/EM model</i></p>
+            <img class="img5" src="93page.jpeg">
+            
+            
+            <p>Table 3 shows classification accuracy of models formed by both ELSA/EM and the
+greedy search. We compute accuracy by assigning a class label to each cluster based
+on the majority class of the points contained in the cluster, and then computing
+correctness on only those classes, e.g., models with only two clusters are graded on their
+ability to find two classes. ELSA results represent individuals selected from candidate
+fronts with less than eight features. ELSA/EM consistently outperforms the greedy
+search on models with few features and few clusters. For more complex models with more
+than 10 selected features, the greedy method often shows higher classification accuracy.</p>
+            <p><i>Figure 8: Candidate fronts for K = 5 based on Faccuracy evolved in ELSA/EM. It is captured
+at every 3,000 solution evaluations and two fronts (t = 18,000 and t = 24,000) are
+omitted because they have the same shape as the ones at t = 15,000 and t = 21,000,
+respectively.</i></p>
+            <img  class="img6" src="94page.jpeg">
+            <p><i>Table 3: The average classification accuracy (%) with standard error of five runs of
+ELSA/EM and greedy search. The “-” entry indicates that no solution is found by ELSA/
+EM. The last row and column show the number of win-loss-tie (W-L-T) cases of ELSA/
+EM compared with greedy search</i></p>
+<div class="relative w-full overflow-auto">
+<table align="center">
+<tr>
+<th rowspan="2" colspan='2'>K</th>
+<th colspan="7">Number of selected features</th>
+</tr>
+<tr>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>W-L-T</th>
+</tr>
+<tr>
+<td rowspan="2">2</td>
+ <td>ELSA/EM </td>
+    <td>52.6±0.3</td>
+    <td>56.6±0.6</td>
+    <td>92.8±5.2 </td>
+    <td>100±0.0</td> 
+    <td>100±0.0</td>
+    <td>100±0.0</td>    
+<td rowspan="2">5-0-1</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>51.8±1.3</td>
+<td>52.8±0.8</td>
+<td>55.4±1.1</td>
+<td>56.6±0.4</td>
+<td>62.8±3.2</td>
+<td>80.2±8.5</td>
+</tr>
+<tr>
+<td rowspan="2">3</td>
+<td>ELSA/EM</td>
+<td>83.2±4.8</td>
+<td> 52.0±6.6</td>
+<td>91.6±5.7</td>
+<td>93.8±6.2</td>
+<td>99.0±1.0</td>
+<td>100±0.0</td>
+<td rowspan="2">4-0-2</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>40.6±0.3</td>
+<td>40.8±0.2</td>
+<td>40.2±0.2</td>
+<td>63.6±3.8</td>
+<td>100±0.0</td>
+<td>100±0.0</td>
+</tr>
+<tr>
+<td rowspan="2">4</td>
+ <td>ELSA/EM</td>   
+<td>46.2±2.2</td>
+<td>-</td>
+<td>50.6±0.6</td>
+<td>89.6±5.9</td>
+<td>52.0±1.0</td>
+<td>60.6±5.</td>
+
+<td rowspan="2">4-2-0</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>27.8±0.8     </td>
+<td>27.8±0.4</td>
+<td>29.0±0.4
+</td>
+<td>29.6±0.9</td>
+<td>38.0±4.4</td>
+<td>74.2±3.5</td>
+</tr>
+<tr>
+<td rowspan="2">5</td>
+<td>ELSA/EM</td>
+<td>44.6±2.0</td>
+<td>32.6±3.8</td>
+<td>72.0±3.8</td>
+<td>62.4±1.9</td>
+<td>66.4±3.7</td>
+<td>88.0±4.9</td>
+<td rowspan="2">5-0-1</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>23.0±0.4</td>
+<td>22.2±0.8</td>
+<td>24.2±0.9</td>
+<td>23.8±0.5</td>
+<td>29.6±1.7</td>
+<td>81.2±3.0</td>
+</tr>
+<tr>
+<td colspan="2">W-L-T</td>
+<td>3-0-1</td>
+<td>3-1-0</td>
+<td>4-0-0</td>
+<td>4-0-0</td>
+<td>3-0-1</td>
+<td>1-1-2</td>
+<td>18-2-4</td>
+</tr>
+</table>
+</div>
+            
+            <p><b style="font-size: 16px;">Experiments on WPBC Data</b></p>
+            <p>We also tested our algorithm on a real data set, the Wisconsin Prognostic Breast
+Cancer (WPBC) data (Mangasarian, Street, & Wolberg, 1995). This data set records 30
+numeric features quantifying the nuclear grade of breast cancer patients at the University
+of Wisconsin Hospital, along with two traditional prognostic variables — tumor size and
+number of positive lymph nodes. This results in a total of 32 features for each of 198 cases.
+For the experiment, individuals are represented by 38 bits— 32 for the features and 6 for
+K (Kmax = 8). Other ELSA parameters are the same as those used in the previous
+experiments.</p>
+            <p>We analyzed performance on this data set by looking for clinical relevance in the
+resulting clusters. Specifically, we observe the actual outcome (time to recurrence, or
+known disease-free time) of the cases in the three clusters. Figure 9 shows the survival
+characteristics of three prognostic groups found by ELSA/EM. The three groups showed
+well-separated survival characteristics. Out of 198 patients, 59, 54, and 85 patients belong
+to the good, intermediate, and poor prognostic groups, respectively. The good prognostic group was welldifferentiated from the intermediate group (p < 0.076), and the
+intermediate group was significantly different from the poor group (p <0.036). Five-year
+recurrence rates were 12.61%, 21.26%, and 39.85% for the patients in the three groups.
+The chosen dimensions by ELSA/EM included a mix of nuclear morphometric features,
+such as the mean and the standard error of the radius, perimeter, and area, and the largest
+value of the area and symmetry along three other features.</p>
+            <p>We note that neither of the traditional medical prognostic factors— tumor size and
+lymph node status— is chosen. This finding is potentially important because the lymph
+node status can be determined only after lymph nodes are surgically removed from the
+patient’s armpit (Street, Mangasarian, & Wolberg, 1995). We further investigate whether
+other solutions with lymph node information can form three prognostic groups as good
+as our EM solution.</p>
+            <p><i>Figure 9: Estimated survival curves for the three groups found by ELSA/EM.</i></p>
+            <img class="img2" src="95page.jpeg">
+            </div>
+        
+    </body>
+</html>
